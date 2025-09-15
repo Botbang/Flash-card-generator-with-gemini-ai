@@ -1,0 +1,417 @@
+:root {
+  --light-bg: #f8f9fa; /* Lighter grey for light mode */
+  --dark-bg: #202124;  /* Google dark grey */
+  --light-surface: #ffffff;
+  --dark-surface: #2d2e30; /* Slightly lighter dark surface */
+  --light-text-primary: #202124;
+  --dark-text-primary: #e8eaed; /* Google dark mode text */
+  --light-text-secondary: #5f6368;
+  --dark-text-secondary: #bdc1c6; /* Google dark mode secondary text */
+  --light-primary: #1a73e8; /* Google Blue */
+  --dark-primary: #8ab4f8; /* Lighter Google Blue for dark mode */
+  --light-primary-hover: #185abc;
+  --dark-primary-hover: #aecbfa;
+  --light-border: #dadce0;
+  --dark-border: #5f6368;
+  --light-error: #d93025;
+  --dark-error: #f28b82;
+  --light-card-bg: #e8f0fe; /* Light blue background for cards */
+  --dark-card-bg: #3c4043; /* Darker grey for cards */
+  --light-disabled-bg: #e0e0e0;
+  --dark-disabled-bg: #3c4043;
+  --light-disabled-text: #a0a0a0;
+  --dark-disabled-text: #7f8184;
+  --light-shadow-color-1: rgba(60, 64, 67, 0.15);
+  --dark-shadow-color-1: rgba(0, 0, 0, 0.3);
+  --light-shadow-color-2: rgba(60, 64, 67, 0.1);
+  --dark-shadow-color-2: rgba(0, 0, 0, 0.2);
+   --light-focus-shadow-color: rgba(26, 115, 232, 0.2);
+  --dark-focus-shadow-color: rgba(138, 180, 248, 0.3);
+  --light-button-focus-shadow-color: rgba(26, 115, 232, 0.3);
+  --dark-button-focus-shadow-color: rgba(138, 180, 248, 0.4);
+  --light-button-text: white;
+  --dark-button-text: var(--dark-bg); /* Use dark background for text on light blue */
+  --flashcard-width: 280px;
+  --flashcard-height: 220px; /* Adjusted for text only */
+}
+
+body {
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  margin: 0;
+  background-color: light-dark(var(--light-bg), var(--dark-bg));
+  color: light-dark(var(--light-text-primary), var(--dark-text-primary));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: light-dark(var(--light-surface), var(--dark-surface));
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px light-dark(var(--light-shadow-color-1), var(--dark-shadow-color-1)),
+              0 4px 8px light-dark(var(--light-shadow-color-2), var(--dark-shadow-color-2));
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+h1 {
+  color: light-dark(var(--light-primary), var(--dark-primary));
+  margin-bottom: 15px;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+p {
+  margin-bottom: 25px;
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  line-height: 1.6;
+}
+
+.input-switcher {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  background-color: light-dark(var(--light-bg), var(--dark-card-bg));
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.switcher-button {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: none; /* Override default button shadow */
+}
+
+.switcher-button.active {
+  background-color: light-dark(var(--light-surface), var(--dark-surface));
+  color: light-dark(var(--light-primary), var(--dark-primary));
+  box-shadow: 0 1px 2px light-dark(var(--light-shadow-color-2), var(--dark-shadow-color-2));
+}
+
+.switcher-button:not(.active):hover {
+  background-color: light-dark(rgba(0,0,0,0.05), rgba(255,255,255,0.05));
+}
+
+.switcher-button:focus {
+  outline: none; /* Let's rely on the active state for focus indication within the switcher */
+}
+
+.switcher-button:focus-visible {
+   box-shadow: 0 0 0 2px light-dark(var(--light-focus-shadow-color), var(--dark-focus-shadow-color));
+}
+
+.input-container.hidden {
+  display: none;
+}
+
+#pdfUploadLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 15px;
+  margin-bottom: 15px;
+  border: 2px dashed light-dark(var(--light-border), var(--dark-border));
+  border-radius: 8px;
+  background-color: light-dark(var(--light-bg), var(--dark-card-bg));
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  text-align: center;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+#pdfUploadLabel:hover, #pdfUploadLabel:focus {
+  border-color: light-dark(var(--light-primary), var(--dark-primary));
+  background-color: light-dark(var(--light-card-bg), var(--dark-bg)); /* Use card bg for light, dark bg for dark */
+  outline: none;
+}
+
+.pdf-file-name {
+  margin-bottom: 25px;
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  font-weight: 500;
+  min-height: 1.2em; /* Reserve space */
+  word-break: break-all;
+}
+
+.page-selector-container {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.page-selector-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  font-size: 15px;
+}
+
+#pdfPageInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: light-dark(var(--light-bg), var(--dark-card-bg));
+  color: light-dark(var(--light-text-primary), var(--dark-text-primary));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#pdfPageInput:focus {
+  outline: none;
+  border-color: light-dark(var(--light-primary), var(--dark-primary));
+  box-shadow: 0 0 0 2px light-dark(var(--light-focus-shadow-color), var(--dark-focus-shadow-color));
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
+  border-radius: 8px;
+  font-size: 16px;
+  min-height: 120px;
+  background-color: light-dark(var(--light-bg), var(--dark-card-bg)); /* Use darker card bg for dark text area */
+  color: light-dark(var(--light-text-primary), var(--dark-text-primary));
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: light-dark(var(--light-primary), var(--dark-primary));
+  box-shadow: 0 0 0 2px light-dark(var(--light-focus-shadow-color), var(--dark-focus-shadow-color));
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+button {
+  background-color: light-dark(var(--light-primary), var(--dark-primary));
+  color: light-dark(var(--light-button-text), var(--dark-button-text));
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px light-dark(var(--light-shadow-color-2), var(--dark-shadow-color-2));
+}
+
+button:hover {
+  background-color: light-dark(var(--light-primary-hover), var(--dark-primary-hover));
+  box-shadow: 0 1px 3px light-dark(var(--light-shadow-color-1), var(--dark-shadow-color-1));
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px light-dark(var(--light-button-focus-shadow-color), var(--dark-button-focus-shadow-color));
+}
+
+#cancelButton {
+    background-color: light-dark(var(--light-text-secondary), var(--dark-card-bg));
+    color: light-dark(var(--light-button-text), var(--dark-text-primary));
+}
+#cancelButton:hover {
+    background-color: light-dark(var(--dark-border), var(--dark-border));
+}
+
+button:disabled {
+  background-color: light-dark(var(--light-disabled-bg), var(--dark-disabled-bg));
+  color: light-dark(var(--light-disabled-text), var(--dark-disabled-text));
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.hidden {
+    display: none;
+}
+
+.error-message {
+  color: light-dark(var(--light-error), var(--dark-error));
+  margin-top: 20px;
+  font-weight: 500;
+  min-height: 1.5em;
+}
+
+.loader {
+  border: 4px solid light-dark(var(--light-bg), var(--dark-surface));
+  border-top: 4px solid light-dark(var(--light-primary), var(--dark-primary));
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+.loader.hidden {
+  display: none;
+}
+
+.progress-container {
+  width: 80%;
+  background-color: light-dark(var(--light-border), var(--dark-surface));
+  border-radius: 8px;
+  margin: 20px auto;
+  padding: 4px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.progress-container.hidden {
+    display: none;
+}
+
+#progressBar {
+  width: 0%;
+  height: 20px;
+  background-color: light-dark(var(--light-primary), var(--dark-primary));
+  border-radius: 6px;
+  transition: width 0.3s ease-in-out;
+}
+
+#progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: light-dark(var(--light-button-text), var(--dark-text-primary));
+  font-weight: 500;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.flashcards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 40px;
+  justify-content: center;
+  perspective: 1000px; /* Add perspective for 3D effect */
+}
+
+.flashcard {
+  background-color: transparent; /* Make the outer container transparent */
+  width: var(--flashcard-width);
+  height: var(--flashcard-height);
+  border: none; /* Remove border from outer container */
+  border-radius: 10px;
+  cursor: pointer;
+  perspective: 1000px; /* Add perspective for 3D effect */
+  box-shadow: none; /* Remove shadow from outer container */
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 1px 2px light-dark(var(--light-shadow-color-2), var(--dark-shadow-color-2)); /* Apply shadow here */
+  border-radius: 10px; /* Apply border-radius here */
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px; /* Match parent */
+  border: 1px solid light-dark(var(--light-border), var(--dark-border)); /* Apply border here */
+  background-color: light-dark(var(--light-card-bg), var(--dark-card-bg)); /* Apply background here */
+  text-align: center;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  justify-content: space-around; /* Space out content */
+  gap: 10px;
+}
+
+.flashcard:hover .flashcard-inner {
+  box-shadow: 0 4px 8px light-dark(var(--light-shadow-color-1), var(--dark-shadow-color-1));
+}
+
+.flashcard:hover .flashcard-front,
+.flashcard:hover .flashcard-back {
+   border-color: light-dark(var(--light-primary), var(--dark-primary));
+}
+
+.term {
+  font-size: 1.5em; /* Adjust size */
+  font-weight: 500;
+  color: light-dark(var(--light-text-primary), var(--dark-text-primary));
+}
+
+.definition {
+  font-size: 1.0em; /* Adjust size */
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  line-height: 1.4; /* Adjust line height */
+}
+
+.mnemonic-heading {
+    font-weight: 500;
+    font-size: 0.9em;
+    color: light-dark(var(--light-text-primary), var(--dark-text-primary));
+    margin-bottom: 5px;
+}
+
+.mnemonic-text {
+    font-size: 0.9em;
+    font-style: italic;
+    color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+}
+
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid light-dark(var(--light-border), var(--dark-border));
+  color: light-dark(var(--light-text-secondary), var(--dark-text-secondary));
+  font-size: 0.9em;
+}

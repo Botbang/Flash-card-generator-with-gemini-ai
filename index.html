@@ -1,0 +1,59 @@
+<script type="importmap">
+  {
+    "imports": {
+      "@google/genai": "https://esm.sh/@google/genai@^0.7.0",
+      "pdfjs-dist": "https://esm.sh/pdfjs-dist@4.0.379",
+      "jspdf": "https://esm.sh/jspdf@2.5.1"
+    }
+  }
+  </script>
+  <!-- Add Google Fonts Link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <div class="container">
+    <h1>Flashcard Generator</h1>
+    <p>
+      Generate flashcards using the Gemini API. Choose your input method below.
+    </p>
+
+    <div class="input-switcher">
+        <button id="textModeButton" class="switcher-button active" aria-pressed="true">Text Input</button>
+        <button id="pdfModeButton" class="switcher-button" aria-pressed="false">PDF Upload</button>
+    </div>
+
+    <div id="textInputContainer" class="input-container">
+        <textarea
+        id="topicInput"
+        placeholder="Enter topic (e.g., Ancient Rome) or 'Term: Definition' pairs (one per line)"
+        ></textarea>
+    </div>
+
+    <div id="pdfInputContainer" class="input-container hidden">
+        <input type="file" id="pdfInput" accept=".pdf" hidden>
+        <label for="pdfInput" id="pdfUploadLabel" role="button" tabindex="0">
+        <span>Click to choose a PDF file</span>
+        </label>
+        <div id="pdfFileName" class="pdf-file-name"></div>
+        <div id="pdfPageSelectorContainer" class="page-selector-container hidden">
+            <label for="pdfPageInput">Pages (e.g., 1, 3, 5-8)</label>
+            <input type="text" id="pdfPageInput" placeholder="All pages by default">
+        </div>
+    </div>
+
+    <div class="action-buttons">
+      <button id="generateButton">Generate Flashcards</button>
+      <button id="cancelButton" class="hidden">Cancel</button>
+      <button id="exportPdfButton" class="hidden">Export to PDF</button>
+    </div>
+    <div id="loader" class="loader hidden"></div>
+    <div id="progressContainer" class="progress-container hidden">
+      <div id="progressBar"></div>
+      <span id="progressText">0%</span>
+    </div>
+    <div id="errorMessage" class="error-message"></div>
+    <div id="flashcardsContainer" class="flashcards-container">
+      <!-- Flashcards will be generated here -->
+    </div>
+  </div>
